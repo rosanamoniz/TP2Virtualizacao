@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" href="static/css/login.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<form action="action_page.php" method="post">
+    <div class="container">
+        <div class="card card-container">
+            
+            <p id="profile-name" class="profile-name-card"></p>
+        <label for="nome"><b>Nome</b></label>
+        <input type="text" class="form-control" placeholder="Nome" name="nome" id="nome" required>
+
+        <label for="apelido"><b>Apelido</b></label>
+        <input type="text" class="form-control" placeholder="Apelido" name="apelido" id="apelido" required>
+
+        <label for="email"><b>Email</b></label>
+        <input type="text" class="form-control" placeholder="Enter Email" name="email" id="email" required>
+
+
+        <label for="login"><b>Login</b></label>
+        <input type="text" class="form-control" placeholder="Login" name="login" id="login" required>
+
+        <label for="palavraPasse"><b>Palavra Passe</b></label>
+        <input type="text" class="form-control" placeholder="Enter Email" name="palavraPasse" id="palavraPasse"
+            required>
+
+        <button type="button" id="login_button" class="btn btn-primary btn btn-lg btn-primary btn-block btn-signin">Registrar</button>
+        </div>
+    </div>
+</form>
+
+</html>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script>
+    $('#login_button').on('click', function () {
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify({
+                nome: $('#nome').val(),
+                apelido: $('#apelido').val(),
+                email: $('#email').val(),
+                login: $('#login').val(),
+                palavraPasse: $('#palavraPasse').val()
+            }),
+            contentType: "application/json",
+            url: "/registar/",
+            success: function (data) {
+                console.log(data);
+                // if (data == 'false') {
+                //     alert("Nao foi possivel eefctuar registro");
+                // } else {
+                //     alert("Registro feito com sucesso"+data);
+                // }
+                alert("UPS" + data);
+            },
+            error: function (jqXHR) {
+                alert("error: " + jqXHR.status);
+            }
+        })
+    });
+</script>

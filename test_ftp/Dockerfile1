@@ -1,0 +1,20 @@
+FROM ubuntu:latest
+
+RUN apt-get update && \
+		apt-get install -y --no-install-recommends vsftpd db-util && \
+		apt-get clean
+
+ENV FTP_USER admin
+ENV FTP_PASS admin
+
+VOLUME /home/vsftpd
+VOLUME /var/log/vsftpd
+
+EXPOSE 20 21
+
+CMD ["/usr/sbin/run-vsftpd.sh"]
+
+
+
+
+

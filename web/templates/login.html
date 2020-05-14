@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body>
+    <form action="action_page.php" method="post">
+        <div class="container">
+            <label for="login"><b>Login</b></label>
+            <input type="text" class="form-control" placeholder="login" name="login" id="login" required>
+
+            <label for="palavraPasse"><b>Password</b></label>
+            <input type="password" class="form-control" placeholder="Palavra passe" name="palavraPasse"
+                id="palavraPasse" required>
+
+            <button type="button" id="login_button" class="btn btn-primary">Login</button>
+        </div>
+    </form>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script>
+        $('#login_button').on('click', function () {
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify({
+                    login: $('#login').val(),
+                    palavraPasse: $('#palavraPasse').val()
+                }),
+                contentType: "application/json",
+                url: "/login/",
+                success: function (data) {
+                    console.log(data);
+                    if (data == 'false') {
+                        alert("user ou password falhou");
+                    } else {
+                        //alert("login com sucesso. Token: " + data);
+                        //window.location.href = "/VerUtilizadores";
+                        location.replace("http://localhost:8001/?token="+data)
+                    }
+                },
+                error: function (jqXHR) {
+                    alert("error: " + jqXHR.status);
+                }
+            })
+        });
+    </script>
+</body>
+
+</html>

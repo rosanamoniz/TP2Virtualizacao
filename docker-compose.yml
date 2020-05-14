@@ -1,0 +1,60 @@
+version: "3"
+
+services:
+  web:
+    build: "./web"
+    container_name: autentication_server
+    ports:
+      - "5000:5000"
+    networks: 
+      - appnetwork1
+      - appnetwork2
+      - appnetwork3
+    links: 
+      - db
+  db:
+    build: "./db"
+    container_name: db
+    image: nouchka/sqlite3:latest
+    stdin_open: true
+    tty: true
+    ports: 
+      - "3000:3001"
+    networks: 
+      - appnetwork1
+    volumes:
+      - vol_db:/home/rosana/Desktop/env4/db
+  http:
+    build: "./http"
+    container_name: http
+    ports: 
+      - "8001:8001"
+    networks: 
+      - appnetwork2
+    volumes:
+      - vol_storage:/home/rosana/Desktop/env4/http
+      - db
+  ftp:
+    build: "./test_ftp"
+    container_name: ftp_test
+    image: bogem/ftp
+    ports:
+      - "20-21:21-21"
+      - "47400-47401:47400-47401"
+    volumes:
+      - vol_storage:/home/rosana/Desktop/env4/test_ftp
+    environment:
+      PUBLICHOST: "localhost"
+      FTP_USER_NAME: username
+      FTP_USER_PASS: mypass   
+    networks: 
+      - appnetwork3  
+networks: 
+  appnetwork1:
+  appnetwork2:
+  appnetwork3:
+volumes:
+  vol_db:
+  vol_storage:
+
+  

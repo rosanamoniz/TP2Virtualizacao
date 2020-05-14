@@ -1,0 +1,13 @@
+FROM alpine:3.5
+
+RUN apk update && \
+    apk add sqlite && \
+    rm -rf /var/cache/apk/*
+COPY requirements.txt ./
+
+COPY . .
+ENTRYPOINT ["/usr/bin/sqlite3"]
+
+CMD ["/database.BASE_DE_DADOS.db"]
+
+
